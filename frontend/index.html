@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rule Engine</title>
+    <style>
+      <!-- @import url("https://fonts.googleapis.com/css2?family=Londrina+Sketch&display=swap"); -->
+      <!-- @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"); -->
+      body {
+        font-family: "Trebuchet MS", sans-serif;
+        margin: 0;
+        padding: 0;
+        --color: rgba(114, 114, 114, 0.2);
+        background-color: #a4e852; /* Base color */
+background-image: 
+    linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        var(--color) 25%,
+        var(--color) 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        var(--color) 75%,
+        var(--color) 100%
+    ),
+    linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        var(--color) 25%,
+        var(--color) 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        var(--color) 75%,
+        var(--color) 100%
+    );
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Adding a soft shadow for depth */
+        background-size: 80px 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 850px;
+        background-color: #072b30;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+
+      h1 {
+        font-family:  sans-serif;
+        font-weight: 600;
+        font-size: 72px;
+        color: #d762f4;
+        margin-bottom: 30px;
+      }
+
+      h2,
+      h3 {
+        font-family:  sans-serif;
+        font-weight: 500;
+        font-size: 26px;
+        color: #f0e465;
+        margin-bottom: 16px;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      form div,
+      form label {
+        font-size: 18px;
+        color: #ececec;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      form input[type="text"],
+      form textarea,
+      form select {
+        width: 100%;
+        max-width: 500px;
+        height: 35px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #428cd2;
+        color: #f5f5f5;
+        margin-bottom: 12px;
+        font-size: 16px;
+        transition: box-shadow 0.3s ease;
+      }
+
+      form textarea {
+        height: 100px;
+        resize: none;
+      }
+
+      form input:focus,
+      form textarea:focus,
+      form select:focus {
+        box-shadow: 0px 0px 5px 2px #d14fbd;
+        outline: none;
+      }
+
+      form button {
+        width: 70%;
+        max-width: 300px;
+        padding: 12px;
+        margin-top: 12px;
+        border: none;
+        background-color: #00796b;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s;
+      }
+
+      form button:hover {
+        background-color: #20c6ab;
+      }
+
+      pre {
+        background-color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #555;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        color: #e0e0e0;
+        font-family: monospace;
+        font-size: 14px;
+      }
+
+      .rule-container {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        background-color: transparent;
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      #add-rule {
+        background-color: #0288d1;
+        color: #fff;
+      }
+
+      #combined-rules-tree,
+      #combine-rules-result,
+      #create-rule-result {
+        margin-top: 20px;
+        background-color: #333;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        color: #3eff68;
+        text-align: left;
+        white-space: pre;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 15px;
+        }
+
+        form input[type="text"],
+        form textarea,
+        form select {
+          width: 100%;
+        }
+
+        form button {
+          padding: 10px;
+          font-size: 16px;
+        }
+
+        form textarea {
+          height: 80px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 10px;
+        }
+
+        form button {
+          padding: 8px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Rule Engine</h1>
+
+      <h2>Create Rule</h2>
+      <form id="create-rule-form">
+        <div>
+          <label for="ruleName">Rule Name:</label>
+          <input type="text" id="ruleName" name="ruleName" required />
+        </div>
+        <div>
+          <label for="ruleString">Rule:</label>
+          <input type="text" id="ruleString" name="ruleString" required />
+        </div>
+        <button type="submit">Create Rule</button>
+      </form>
+      <pre id="create-rule-result"></pre>
+
+      <hr />
+
+      <h2>Combine Rules</h2>
+      <form id="combine-rules-form">
+        <h3>Enter Rules to Combine:</h3>
+        <div id="rules-inputs">
+          <div class="rule-container">
+            <label for="combine-rule1">Rule 1:</label>
+            <input type="text" id="combine-rule1" name="rule1" required />
+            <label for="operator1">Operator:</label>
+            <select id="operator1" name="operator1">
+              <option value="AND">AND</option>
+              <option value="OR">OR</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" id="add-rule">Add Another Rule</button>
+        <button type="submit">Combine Rules</button>
+      </form>
+      <pre id="combine-rules-result"></pre>
+
+      <hr />
+
+      <h2>Evaluate Rule</h2>
+      <form id="evaluate-rule-form">
+        <div>
+          <label for="evaluate-ast">Rule Name:</label>
+          <input type="text" id="evaluate-ast" name="ast" required />
+        </div>
+        <div>
+          <label for="evaluate-data">Data JSON:</label>
+          <textarea id="evaluate-data" name="data" required></textarea>
+        </div>
+        <button type="submit">Evaluate Rule</button>
+      </form>
+      <pre id="evaluate-rule-result"></pre>
+    </div>
+    <script>
+      // Handle Create Rule form submission
+      document
+        .getElementById("create-rule-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const ruleName = document.getElementById("ruleName").value;
+          const ruleString = document.getElementById("ruleString").value;
+          await fetch("/api/rules/create_rule", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ruleName, ruleString }),
+          });
+          document.getElementById("create-rule-result").textContent =
+            "Rule created successfully";
+        });
+
+      // Handle Combine Rules form submission
+      document
+        .getElementById("combine-rules-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const op = document.getElementById("operator1").value;
+          const rules = Array.from(
+            document.querySelectorAll('input[id^="combine-rule"]')
+          ).map((input) => input.value);
+          await fetch("/api/rules/combine_rules", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ rules, op }),
+          });
+          document.getElementById("combine-rules-result").textContent =
+            "Rule combined successfully";
+        });
+
+      // Handle Evaluate Rule form submission (remains unchanged)
+      document
+        .getElementById("evaluate-rule-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const ast = document.getElementById("evaluate-ast").value;
+          const data = JSON.parse(
+            document.getElementById("evaluate-data").value
+          );
+          const response = await fetch("/api/rules/evaluate_rule", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ast, data }),
+          });
+          const result = await response.json();
+          document.getElementById("evaluate-rule-result").textContent =
+            JSON.stringify(result, null, 2);
+        });
+    </script>
+    </body>
+</html>
