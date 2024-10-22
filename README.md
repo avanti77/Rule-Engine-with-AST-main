@@ -17,7 +17,6 @@ This application functions as a rule engine that assesses user eligibility based
 
 ![Screenshot 2024-10-22 144343](https://github.com/user-attachments/assets/54164383-3cbe-47a0-8e48-38be47d7b375)
 
-- *Tree Visualization*: When defining or combining rules, a tree representation will be displayed for better understanding.
 
 ## Tech Stack
 - *Backend*: Node.js, Express.js
@@ -35,24 +34,25 @@ Ensure you have Node.js and npm installed on your machine.
    
 
 2. Navigate to the project directory:
-   bash
+```bash
    cd Application-1-Rule-Engine-with-AST
-   
+   ```
 
 3. Install the Backend Dependencies:
-   bash
+   ```bash
    npm install
+   ```
    
 
 4. Create a .env file in the root directory and add your MongoDB URL:
-   env
+   ```bash
    MONGO_URL=""
-   
+   ```
 
 5. Launch the Server:
-   bash
+   ```bash
    npm start
-   
+         
 
 ## API Endpoints
 
@@ -123,4 +123,8 @@ Ensure you have Node.js and npm installed on your machine.
 
 ## Running Tests
 You can implement and execute tests to verify that everything is functioning as expected.
+
+## Deployed on versel
+
+[See Project](https://rule-engine-with-ast-main.vercel.app/)
 
