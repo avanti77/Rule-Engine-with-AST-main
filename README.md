@@ -1,6 +1,5 @@
 # Application 1: Rule Engine using AST
 
-![Preview](image) <!-- Replace with actual image link -->
 
 ## Overview
 This application functions as a rule engine that assesses user eligibility based on various attributes, including age, department, salary, and experience. It employs an Abstract Syntax Tree (AST) for representing and managing conditional rules, facilitating the dynamic creation, combination, and evaluation of rules.
@@ -8,15 +7,15 @@ This application functions as a rule engine that assesses user eligibility based
 ## Features
 - *Rule Creation*: Users can define rules using a string format, which is then transformed into an AST.
   
-  ![Rule Creation](image) <!-- Replace with actual image link -->
+![Screenshot 2024-10-22 144202](https://github.com/user-attachments/assets/8f4f6081-c023-4f70-84f7-14bfe35b794f)
 
 - *Rule Combination*: Allows the merging of multiple rules into a singular AST to enable more intricate evaluations.
 
-  ![Rule Combination](image) <!-- Replace with actual image link -->
+![Screenshot 2024-10-22 144409](https://github.com/user-attachments/assets/b95d99ea-4f44-4d26-86ac-6f3c8d52c112)
 
 - *Rule Evaluation*: Assesses whether the provided data aligns with the criteria set by the AST.
 
-  ![Rule Evaluation](image) <!-- Replace with actual image link -->
+![Screenshot 2024-10-22 144343](https://github.com/user-attachments/assets/54164383-3cbe-47a0-8e48-38be47d7b375)
 
 - *Tree Visualization*: When defining or combining rules, a tree representation will be displayed for better understanding.
 
@@ -32,7 +31,7 @@ Ensure you have Node.js and npm installed on your machine.
 ### Installation Steps
 1. Clone the Repository:
    bash
-   git clone "https://github.com/Tereshaa/Application-1-Rule-Engine-with-AST.git"
+   git clone "(https://github.com/avanti77/Rule-Engine-with-AST-main).git"
    
 
 2. Navigate to the project directory:
@@ -76,7 +75,7 @@ Ensure you have Node.js and npm installed on your machine.
     "ruleId": "abc123"
   }
   
-  ![Response Image](image) <!-- Replace with actual image link -->
+![s3](https://github.com/user-attachments/assets/fabe26c4-170f-4890-b8ea-9b51774b3cf0)
 
 ### Combine Rules
 - *Endpoint*: /api/rules/combine_rules
@@ -98,7 +97,6 @@ Ensure you have Node.js and npm installed on your machine.
     "combinedRuleId": "xyz789"
   }
   
-  ![Response Image](image) <!-- Replace with actual image link -->
 
 ### Evaluate a Rule
 - *Endpoint*: /api/rules/evaluate_rule
@@ -126,7 +124,3 @@ Ensure you have Node.js and npm installed on your machine.
 ## Running Tests
 You can implement and execute tests to verify that everything is functioning as expected.
 
-## License
-This project is licensed under the MIT License.![Screenshot 2024-10-22 144409](https://github.com/user-attachments/assets/b95d99ea-4f44-4d26-86ac-6f3c8d52c112)
-![Screenshot 2024-10-22 144343](https://github.com/user-attachments/assets/54164383-3cbe-47a0-8e48-38be47d7b375)
-![Screenshot 2024-10-22 144202](https://github.com/user-attachments/assets/8f4f6081-c023-4f70-84f7-14bfe35b794f)
